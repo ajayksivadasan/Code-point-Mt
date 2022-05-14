@@ -18,6 +18,7 @@ public class MainViewModel extends ViewModel {
     @Inject
     MainRepository mainRepository;
 
+    @Inject
     public MainViewModel() {
         baseResponseLiveData = new MutableLiveData<>();
         disposable = new CompositeDisposable();

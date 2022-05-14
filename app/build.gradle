@@ -54,6 +54,12 @@ dependencies {
     //room android
     implementation 'androidx.room:room-runtime:2.4.2'
     annotationProcessor 'androidx.room:room-compiler:2.4.2'
+
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.13.1'
+    //Something
+    implementation 'jp.wasabeef:glide-transformations:4.3.0'
+
     //retrofit libraries
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'

@@ -1,5 +1,6 @@
 package com.aks.codepointmt.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -11,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aks.codepointmt.data.network.request.BaseRequest;
 import com.aks.codepointmt.databinding.ActivityMainBinding;
 import com.aks.codepointmt.ui.main.MainViewModel;
+import com.aks.codepointmt.ui.main.StudentsAdapter;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -22,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     Context context;
     MainViewModel mainViewModel;
+    private StudentsAdapter studentsAdapter;
     String requestJson = "{\n" +
             "    \"jsonrpc\": \"1.0\",\n" +
             "    \"method\": \"SyncUserDetails\",\n" +
@@ -51,5 +56,16 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         mainViewModel.makeApiCall(BaseRequest.objectFromData(requestJson));
         mainBinding.rvStudents.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
+        studentsAdapter = new StudentsAdapter(context, new ArrayList<>());
+        mainBinding.rvStudents.setAdapter(studentsAdapter);
+        initView();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private void initView() {
+        mainViewModel.getBaseResponseLiveData().observe(this, baseResponse -> {
+            studentsAdapter.updateAdapter(baseResponse.getResult().getStudents());
+            studentsAdapter.notifyDataSetChanged();
+        });
     }
 }

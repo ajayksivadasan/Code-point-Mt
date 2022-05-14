@@ -24,6 +24,10 @@ public class MainViewModel extends ViewModel {
         disposable = new CompositeDisposable();
     }
 
+    public MutableLiveData<BaseResponse> getBaseResponseLiveData() {
+        return baseResponseLiveData;
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();

@@ -1,19 +1,26 @@
 package com.aks.codepointmt.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.aks.codepointmt.data.network.request.BaseRequest;
 import com.aks.codepointmt.databinding.ActivityMainBinding;
 import com.aks.codepointmt.ui.main.MainViewModel;
+
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding mainBinding;
+    @Inject
+    Context context;
     MainViewModel mainViewModel;
     String requestJson = "{\n" +
             "    \"jsonrpc\": \"1.0\",\n" +
@@ -43,5 +50,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(mainBinding.getRoot());
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         mainViewModel.makeApiCall(BaseRequest.objectFromData(requestJson));
+        mainBinding.rvStudents.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
     }
 }
